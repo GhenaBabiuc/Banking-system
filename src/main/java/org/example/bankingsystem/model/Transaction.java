@@ -29,8 +29,14 @@ public class Transaction {
     @JoinColumn(name = "destination_account_id", nullable = false)
     private Account destinationAccount;
 
+    @Enumerated(EnumType.STRING)
+    private TransactionType transactionType;
+
     @Column(name = "amount", nullable = false, precision = 15, scale = 2)
     private BigDecimal amount;
+
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;

@@ -8,7 +8,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - ./db_data:/var/lib/postgresql/data
 
   app:
     build:
@@ -25,5 +25,18 @@ services:
       APPLICATION_NAME: Banking-system
       LIQUIBASE_CHANGELOG: classpath:/db/changelog/db.changelog-master.xml
 
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+    volumes:
+      - ./pgadmin_data:/var/lib/pgadmin
+
 volumes:
   db_data:
+  pgadmin_data:

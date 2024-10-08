@@ -187,3 +187,11 @@ ALTER TABLE cards
 --changeset gbabiuc:add-clients-foreign_key splitStatements:false
 ALTER TABLE clients
     ADD FOREIGN KEY (user_id) REFERENCES users (id);
+
+--changeset gbabiuc:inserting-data-into-the-account_types-table splitStatements:false
+INSERT INTO account_types (name, description)
+VALUES ('Savings Account', 'A deposit account for saving money with interest.'),
+       ('Checking Account', 'A transactional account for daily expenses and payments.'),
+       ('Business Account', 'An account designed for business transactions.'),
+       ('Loan Account', 'An account for managing loans and repayments.'),
+       ('Credit Account', 'An account used to manage credit cards and payments.');

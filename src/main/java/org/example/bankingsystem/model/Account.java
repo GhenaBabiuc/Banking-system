@@ -32,7 +32,7 @@ public class Account {
     @JsonBackReference
     private Client client;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_type_id", nullable = false)
     private AccountType accountType;
 

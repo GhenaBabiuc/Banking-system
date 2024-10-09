@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/accounts")
@@ -14,6 +15,13 @@ public class AccountController {
 
     @Resource
     private AccountService accountService;
+
+    @GetMapping("/{accountId}")
+    public ResponseEntity<Account> getAccount(@PathVariable Long accountId) {
+        Optional<Account> account = accountService.getAccountById(accountId);
+        
+        return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
     @PostMapping("/create")
     public ResponseEntity<Account> createAccount(@RequestBody Account account) {

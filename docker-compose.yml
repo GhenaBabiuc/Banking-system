@@ -7,8 +7,18 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
+    networks:
+      - banking-system
     volumes:
       - ./db_data:/var/lib/postgresql/data
+    profiles:
+      - all
+      - db
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user -d cardb" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   app:
     build:
@@ -17,26 +27,23 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/bankdb
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: password
       APPLICATION_NAME: Banking-system
       LIQUIBASE_CHANGELOG: classpath:/db/changelog/db.changelog-master.xml
-
-  pgadmin:
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: admin
-    ports:
-      - "5050:80"
-    depends_on:
-      - db
-    volumes:
-      - ./pgadmin_data:/var/lib/pgadmin
+    networks:
+      - banking-system
+    profiles:
+      - all
+      - app
 
 volumes:
   db_data:
-  pgadmin_data:
+
+networks:
+  banking-system:
+    driver: bridge

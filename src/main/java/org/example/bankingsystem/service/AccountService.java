@@ -1,6 +1,7 @@
 package org.example.bankingsystem.service;
 
 import org.example.bankingsystem.model.Account;
+import org.example.bankingsystem.model.dto.AccountDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -16,4 +17,6 @@ public interface AccountService {
 
     @Transactional
     Account withdraw(Long accountId, BigDecimal amount);
+
+    AccountDTO convertToDto(Account account);
 }

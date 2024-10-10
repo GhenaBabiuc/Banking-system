@@ -2,6 +2,7 @@ package org.example.bankingsystem.service.impl;
 
 import jakarta.annotation.Resource;
 import org.example.bankingsystem.model.Account;
+import org.example.bankingsystem.model.dto.AccountDTO;
 import org.example.bankingsystem.repository.AccountRepository;
 import org.example.bankingsystem.repository.ClientRepository;
 import org.example.bankingsystem.service.AccountService;
@@ -16,9 +17,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Resource
     private AccountRepository accountRepository;
-
-    @Resource
-    private ClientRepository clientRepository;
 
     @Override
     public Account createAccount(Account account) {
@@ -49,5 +47,19 @@ public class AccountServiceImpl implements AccountService {
         }
         account.setBalance(account.getBalance().subtract(amount));
         return accountRepository.save(account);
+    }
+
+    @Override
+    public AccountDTO convertToDto(Account account) {
+        return new AccountDTO(
+                account.getId(),
+                account.getNumber(),
+                account.getClient().getId(),
+                account.getAccountType().getId(),
+                account.getBalance(),
+                account.getCurrency().toString(),
+                account.getCreatedAt(),
+                account.getStatus().toString()
+        );
     }
 }

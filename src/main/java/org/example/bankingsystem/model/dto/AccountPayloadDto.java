@@ -9,14 +9,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Schema(description = "DTO representing account details")
-public class AccountDTO {
-
-    @Schema(description = "Unique identifier of the account", example = "1")
-    private Long id;
-
+public class AccountPayloadDto {
     @Schema(description = "Account number", example = "12345678901234567890", required = true)
     private String number;
 

@@ -1,16 +1,17 @@
 package org.example.bankingsystem.service;
 
 import org.example.bankingsystem.model.Account;
-import org.example.bankingsystem.model.dto.AccountDTO;
+import org.example.bankingsystem.model.dto.AccountPayloadDto;
+import org.example.bankingsystem.model.dto.AccountResponseDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
 public interface AccountService {
-    Account createAccount(Account account);
-
     Optional<Account> getAccountById(Long id);
+
+    Account createAccount(Account account);
 
     @Transactional
     Account deposit(Long accountId, BigDecimal amount);
@@ -18,5 +19,7 @@ public interface AccountService {
     @Transactional
     Account withdraw(Long accountId, BigDecimal amount);
 
-    AccountDTO convertToDto(Account account);
+    AccountResponseDTO convertToResponseDto(Account account);
+
+    Account convertFromPayloadDto(AccountPayloadDto accountPayloadDto);
 }

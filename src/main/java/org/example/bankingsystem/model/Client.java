@@ -35,8 +35,8 @@ public class Client {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Account> accounts;
 
     @ManyToOne(fetch = FetchType.LAZY)

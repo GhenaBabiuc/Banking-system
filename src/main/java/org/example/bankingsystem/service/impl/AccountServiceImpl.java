@@ -2,7 +2,7 @@ package org.example.bankingsystem.service.impl;
 
 import jakarta.annotation.Resource;
 import org.example.bankingsystem.model.*;
-import org.example.bankingsystem.model.dto.AccountPayloadDto;
+import org.example.bankingsystem.model.dto.AccountPayloadDTO;
 import org.example.bankingsystem.model.dto.AccountResponseDTO;
 import org.example.bankingsystem.repository.AccountRepository;
 import org.example.bankingsystem.service.AccountService;
@@ -64,7 +64,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account convertFromPayloadDto(AccountPayloadDto accountPayloadDto) {
+    public Account convertFromPayloadDto(AccountPayloadDTO accountPayloadDto) {
         return Account.builder()
                 .number(accountPayloadDto.getNumber())
                 .client(Client.builder().id(accountPayloadDto.getClientId()).build())

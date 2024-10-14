@@ -1,7 +1,7 @@
 package org.example.bankingsystem.service;
 
 import org.example.bankingsystem.model.Account;
-import org.example.bankingsystem.model.dto.AccountPayloadDto;
+import org.example.bankingsystem.model.dto.AccountPayloadDTO;
 import org.example.bankingsystem.model.dto.AccountResponseDTO;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,5 +21,5 @@ public interface AccountService {
 
     AccountResponseDTO convertToResponseDto(Account account);
 
-    Account convertFromPayloadDto(AccountPayloadDto accountPayloadDto);
+    Account convertFromPayloadDto(AccountPayloadDTO accountPayloadDto);
 }

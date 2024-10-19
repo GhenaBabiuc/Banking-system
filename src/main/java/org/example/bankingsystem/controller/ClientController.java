@@ -12,12 +12,42 @@ import org.example.bankingsystem.service.ClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/clients")
 public class ClientController {
 
     @Resource
     private ClientService clientService;
+
+    @Operation(summary = "Create client",
+            description = "Creating a new client.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Client created"),
+            @ApiResponse(responseCode = "404", description = "Client not created", content = @Content)
+    })
+    @PostMapping()
+    public ResponseEntity<ClientResponseDTO> createClient(@RequestBody ClientPayloadDTO clientPayloadDTO) {
+        Client client = clientService.convertFromClientPayloadDto(clientPayloadDTO);
+        Client savedClient = clientService.createClient(client);
+
+        return ResponseEntity.ok(clientService.convertToClientResponseDto(savedClient));
+    }
+
+    @Operation(summary = "Get clients",
+            description = "Fetches the clients details, requires user to be authenticated.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Clients found"),
+            @ApiResponse(responseCode = "404", description = "Clients not found", content = @Content)
+    })
+    @GetMapping()
+    public ResponseEntity<List<ClientResponseDTO>> getAllClients() {
+        List<Client> clients = clientService.getAllClients();
+        List<ClientResponseDTO> clientResponseDTOS = clients.stream().map(client -> clientService.convertToClientResponseDto(client)).toList();
+
+        return ResponseEntity.ok(clientResponseDTOS);
+    }
 
     @Operation(summary = "Get client by ID",
             description = "Fetches the client details by client ID, requires user to be authenticated.")
@@ -32,16 +62,13 @@ public class ClientController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Create client",
-            description = "Creating a new client.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Client created"),
-            @ApiResponse(responseCode = "404", description = "Client not created", content = @Content)
-    })
-    @PostMapping("/create")
-    public ResponseEntity<ClientResponseDTO> createClient(@RequestBody ClientPayloadDTO clientPayloadDTO) {
-        Client savedClient = clientService.createClient(clientService.convertFromClientPayloadDto(clientPayloadDTO));
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateClient(@PathVariable Long id) {
+        return ResponseEntity.ok().build();
+    }
 
-        return ResponseEntity.ok(clientService.convertToClientResponseDto(savedClient));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteClient(@PathVariable Long id) {
+        return ResponseEntity.ok().build();
     }
 }

@@ -8,6 +8,7 @@ import org.example.bankingsystem.repository.ClientRepository;
 import org.example.bankingsystem.service.ClientService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,11 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public Optional<Client> getClientById(Long id) {
         return clientRepository.findById(id);
+    }
+
+    @Override
+    public List<Client> getAllClients() {
+        return clientRepository.findAll();
     }
 
     @Override

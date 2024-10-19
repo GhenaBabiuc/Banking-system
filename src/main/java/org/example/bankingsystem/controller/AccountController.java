@@ -12,14 +12,30 @@ import org.example.bankingsystem.service.AccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-
 @RestController
 @RequestMapping("/accounts")
 public class AccountController {
 
     @Resource
     private AccountService accountService;
+
+    @Operation(summary = "Create account",
+            description = "Creating a new account.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Account created"),
+            @ApiResponse(responseCode = "404", description = "Account not created", content = @Content)
+    })
+    @PostMapping()
+    public ResponseEntity<AccountResponseDTO> createAccount(@RequestBody AccountPayloadDTO accountPayloadDto) {
+        Account savedAccount = accountService.createAccount(accountService.convertFromPayloadDto(accountPayloadDto));
+
+        return ResponseEntity.ok(accountService.convertToResponseDto(savedAccount));
+    }
+
+    @GetMapping()
+    public ResponseEntity<?> getAllAccounts() {
+        return ResponseEntity.ok().build();
+    }
 
     @Operation(summary = "Get account by ID",
             description = "Fetches the account details by account ID, requires user to be authenticated.")
@@ -34,43 +50,39 @@ public class AccountController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @Operation(summary = "Create account",
-            description = "Creating a new account.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Account created"),
-            @ApiResponse(responseCode = "404", description = "Account not created", content = @Content)
-    })
-    @PostMapping("/create")
-    public ResponseEntity<AccountResponseDTO> createAccount(@RequestBody AccountPayloadDTO accountPayloadDto) {
-        Account savedAccount = accountService.createAccount(accountService.convertFromPayloadDto(accountPayloadDto));
-
-        return ResponseEntity.ok(accountService.convertToResponseDto(savedAccount));
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateAccount(@PathVariable Long id) {
+        return ResponseEntity.ok().build();
     }
 
-
-    @Operation(summary = "Deposit into account",
-            description = "Deposits a specified amount into the account, requires user to be authenticated.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Deposit successful"),
-            @ApiResponse(responseCode = "404", description = "Account not found", content = @Content)
-    })
-    @PostMapping("/{id}/deposit")
-    public ResponseEntity<AccountResponseDTO> deposit(@PathVariable Long id, @RequestParam BigDecimal amount) {
-        Account updatedAccount = accountService.deposit(id, amount);
-
-        return ResponseEntity.ok(accountService.convertToResponseDto(updatedAccount));
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAccount(@PathVariable Long id) {
+        return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "Withdraw from account",
-            description = "Withdraws a specified amount from the account, requires user to be authenticated.")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Withdrawal successful"),
-            @ApiResponse(responseCode = "404", description = "Account not found", content = @Content)
-    })
-    @PostMapping("/{id}/withdraw")
-    public ResponseEntity<AccountResponseDTO> withdraw(@PathVariable Long id, @RequestParam BigDecimal amount) {
-        Account updatedAccount = accountService.withdraw(id, amount);
-
-        return ResponseEntity.ok(accountService.convertToResponseDto(updatedAccount));
-    }
+//    @Operation(summary = "Deposit into account",
+//            description = "Deposits a specified amount into the account, requires user to be authenticated.")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Deposit successful"),
+//            @ApiResponse(responseCode = "404", description = "Account not found", content = @Content)
+//    })
+//    @PostMapping("/{id}/deposit")
+//    public ResponseEntity<AccountResponseDTO> deposit(@PathVariable Long id, @RequestParam BigDecimal amount) {
+//        Account updatedAccount = accountService.deposit(id, amount);
+//
+//        return ResponseEntity.ok(accountService.convertToResponseDto(updatedAccount));
+//    }
+//
+//    @Operation(summary = "Withdraw from account",
+//            description = "Withdraws a specified amount from the account, requires user to be authenticated.")
+//    @ApiResponses(value = {
+//            @ApiResponse(responseCode = "200", description = "Withdrawal successful"),
+//            @ApiResponse(responseCode = "404", description = "Account not found", content = @Content)
+//    })
+//    @PostMapping("/{id}/withdraw")
+//    public ResponseEntity<AccountResponseDTO> withdraw(@PathVariable Long id, @RequestParam BigDecimal amount) {
+//        Account updatedAccount = accountService.withdraw(id, amount);
+//
+//        return ResponseEntity.ok(accountService.convertToResponseDto(updatedAccount));
+//    }
 }

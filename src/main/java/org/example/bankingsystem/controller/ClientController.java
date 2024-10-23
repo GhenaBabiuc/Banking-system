@@ -62,13 +62,36 @@ public class ClientController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Update client", description = "Updates a client's details.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Client updated"),
+            @ApiResponse(responseCode = "404", description = "Client not found", content = @Content)
+    })
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateClient(@PathVariable Long id) {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> updateClient(@PathVariable Long id, @RequestBody ClientPayloadDTO clientPayloadDTO) {
+        return clientService.getClientById(id)
+                .map(existingClient -> {
+                    Client updatedClient = clientService.convertFromClientPayloadDto(clientPayloadDTO);
+                    updatedClient.setId(existingClient.getId());
+                    clientService.updateClient(updatedClient);
+
+                    return ResponseEntity.ok(clientService.convertToClientResponseDto(updatedClient));
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
+    @Operation(summary = "Delete client", description = "Deletes a client by ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Client deleted"),
+            @ApiResponse(responseCode = "404", description = "Client not found", content = @Content)
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteClient(@PathVariable Long id) {
-        return ResponseEntity.ok().build();
+        return clientService.getClientById(id)
+                .map(client -> {
+                    clientService.deleteClientById(id);
+                    return ResponseEntity.ok().build();
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 }

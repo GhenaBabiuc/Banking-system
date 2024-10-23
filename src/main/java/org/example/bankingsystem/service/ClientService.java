@@ -14,6 +14,10 @@ public interface ClientService {
 
     List<Client> getAllClients();
 
+    Client updateClient(Client client);
+
+    void deleteClientById(Long id);
+
     ClientResponseDTO convertToClientResponseDto(Client client);
 
     Client convertFromClientPayloadDto(ClientPayloadDTO clientPayloadDTO);

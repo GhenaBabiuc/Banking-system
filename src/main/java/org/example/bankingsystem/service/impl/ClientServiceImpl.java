@@ -33,6 +33,16 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
+    public Client updateClient(Client client) {
+        return clientRepository.save(client);
+    }
+
+    @Override
+    public void deleteClientById(Long id) {
+        clientRepository.deleteById(id);
+    }
+
+    @Override
     public ClientResponseDTO convertToClientResponseDto(Client client) {
         return ClientResponseDTO.builder()
                 .id(client.getId())
@@ -54,5 +64,4 @@ public class ClientServiceImpl implements ClientService {
                 .address(clientPayloadDTO.getAddress())
                 .build();
     }
-
 }

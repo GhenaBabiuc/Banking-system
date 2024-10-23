@@ -5,16 +5,16 @@ import org.example.bankingsystem.model.dto.ClientPayloadDTO;
 import org.example.bankingsystem.model.dto.ClientResponseDTO;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ClientService {
-    Client createClient(Client client);
 
-    Optional<Client> getClientById(Long id);
+    ClientResponseDTO createClient(ClientPayloadDTO clientPayloadDTO);
 
-    List<Client> getAllClients();
+    ClientResponseDTO getClientById(Long id);
 
-    Client updateClient(Client client);
+    List<ClientResponseDTO> getAllClients();
+
+    ClientResponseDTO updateClient(Long id, ClientPayloadDTO clientPayloadDTO);
 
     void deleteClientById(Long id);
 

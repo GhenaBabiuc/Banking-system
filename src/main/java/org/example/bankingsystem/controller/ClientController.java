@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.annotation.Resource;
-import org.example.bankingsystem.model.Client;
 import org.example.bankingsystem.model.dto.ClientPayloadDTO;
 import org.example.bankingsystem.model.dto.ClientResponseDTO;
 import org.example.bankingsystem.service.ClientService;
@@ -29,10 +28,8 @@ public class ClientController {
     })
     @PostMapping()
     public ResponseEntity<ClientResponseDTO> createClient(@RequestBody ClientPayloadDTO clientPayloadDTO) {
-        Client client = clientService.convertFromClientPayloadDto(clientPayloadDTO);
-        Client savedClient = clientService.createClient(client);
-
-        return ResponseEntity.ok(clientService.convertToClientResponseDto(savedClient));
+        ClientResponseDTO responseDTO = clientService.createClient(clientPayloadDTO);
+        return ResponseEntity.ok(responseDTO);
     }
 
     @Operation(summary = "Get clients",
@@ -43,10 +40,8 @@ public class ClientController {
     })
     @GetMapping()
     public ResponseEntity<List<ClientResponseDTO>> getAllClients() {
-        List<Client> clients = clientService.getAllClients();
-        List<ClientResponseDTO> clientResponseDTOS = clients.stream().map(client -> clientService.convertToClientResponseDto(client)).toList();
-
-        return ResponseEntity.ok(clientResponseDTOS);
+        List<ClientResponseDTO> clients = clientService.getAllClients();
+        return ResponseEntity.ok(clients);
     }
 
     @Operation(summary = "Get client by ID",
@@ -57,9 +52,8 @@ public class ClientController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<ClientResponseDTO> getClient(@PathVariable Long id) {
-        return clientService.getClientById(id)
-                .map(client -> ResponseEntity.ok(clientService.convertToClientResponseDto(client)))
-                .orElse(ResponseEntity.notFound().build());
+        ClientResponseDTO clientResponse = clientService.getClientById(id);
+        return ResponseEntity.ok(clientResponse);
     }
 
     @Operation(summary = "Update client", description = "Updates a client's details.")
@@ -68,16 +62,9 @@ public class ClientController {
             @ApiResponse(responseCode = "404", description = "Client not found", content = @Content)
     })
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateClient(@PathVariable Long id, @RequestBody ClientPayloadDTO clientPayloadDTO) {
-        return clientService.getClientById(id)
-                .map(existingClient -> {
-                    Client updatedClient = clientService.convertFromClientPayloadDto(clientPayloadDTO);
-                    updatedClient.setId(existingClient.getId());
-                    clientService.updateClient(updatedClient);
-
-                    return ResponseEntity.ok(clientService.convertToClientResponseDto(updatedClient));
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ClientResponseDTO> updateClient(@PathVariable Long id, @RequestBody ClientPayloadDTO clientPayloadDTO) {
+        ClientResponseDTO updatedClient = clientService.updateClient(id, clientPayloadDTO);
+        return ResponseEntity.ok(updatedClient);
     }
 
     @Operation(summary = "Delete client", description = "Deletes a client by ID.")
@@ -86,12 +73,8 @@ public class ClientController {
             @ApiResponse(responseCode = "404", description = "Client not found", content = @Content)
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteClient(@PathVariable Long id) {
-        return clientService.getClientById(id)
-                .map(client -> {
-                    clientService.deleteClientById(id);
-                    return ResponseEntity.ok().build();
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<Void> deleteClient(@PathVariable Long id) {
+        clientService.deleteClientById(id);
+        return ResponseEntity.ok().build();
     }
 }

@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.annotation.Resource;
-import org.example.bankingsystem.model.Account;
 import org.example.bankingsystem.model.dto.AccountPayloadDTO;
 import org.example.bankingsystem.model.dto.AccountResponseDTO;
 import org.example.bankingsystem.service.AccountService;
@@ -27,9 +26,8 @@ public class AccountController {
     })
     @PostMapping()
     public ResponseEntity<AccountResponseDTO> createAccount(@RequestBody AccountPayloadDTO accountPayloadDto) {
-        Account savedAccount = accountService.createAccount(accountService.convertFromPayloadDto(accountPayloadDto));
-
-        return ResponseEntity.ok(accountService.convertToResponseDto(savedAccount));
+        AccountResponseDTO accountResponseDTO = accountService.createAccount(accountPayloadDto);
+        return ResponseEntity.ok(accountResponseDTO);
     }
 
     @GetMapping()
@@ -45,9 +43,8 @@ public class AccountController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<AccountResponseDTO> getAccountById(@PathVariable Long id) {
-        return accountService.getAccountById(id)
-                .map(account -> ResponseEntity.ok(accountService.convertToResponseDto(account)))
-                .orElse(ResponseEntity.notFound().build());
+        AccountResponseDTO accountResponseDTO = accountService.getAccountById(id);
+        return ResponseEntity.ok(accountResponseDTO);
     }
 
     @PutMapping("/{id}")

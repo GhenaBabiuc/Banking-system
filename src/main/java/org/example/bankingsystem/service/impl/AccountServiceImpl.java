@@ -36,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<AccountResponseDTO> getAllAccounts() {
-        List<Account> accounts = accountRepository.findAll();
+        List<Account> accounts = findAll();
 
         return accounts.stream()
                 .map(this::convertToResponseDto)
@@ -70,23 +70,28 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Override
     public Account save(Account account) {
         return accountRepository.save(account);
     }
 
+    @Override
     public Account findById(Long id) {
         return accountRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Account not found with ID: " + id));
     }
 
+    @Override
     public List<Account> findAll() {
         return accountRepository.findAll();
     }
 
+    @Override
     public Account update(Account account) {
         return accountRepository.save(account);
     }
 
+    @Override
     public void delete(Account account) {
         accountRepository.delete(account);
     }
@@ -115,7 +120,6 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
-    @Override
     public AccountResponseDTO convertToResponseDto(Account account) {
         return AccountResponseDTO.builder()
                 .id(account.getId())
@@ -129,7 +133,6 @@ public class AccountServiceImpl implements AccountService {
                 .build();
     }
 
-    @Override
     public Account convertFromPayloadDto(AccountPayloadDTO accountPayloadDto) {
         return Account.builder()
                 .number(accountPayloadDto.getNumber())

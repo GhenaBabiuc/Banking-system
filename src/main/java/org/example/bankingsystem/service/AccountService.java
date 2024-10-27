@@ -18,7 +18,13 @@ public interface AccountService {
 
     void deleteAccountById(Long id);
 
-    AccountResponseDTO convertToResponseDto(Account account);
+    Account save(Account account);
 
-    Account convertFromPayloadDto(AccountPayloadDTO accountPayloadDto);
+    Account findById(Long id);
+
+    List<Account> findAll();
+
+    Account update(Account account);
+
+    void delete(Account account);
 }

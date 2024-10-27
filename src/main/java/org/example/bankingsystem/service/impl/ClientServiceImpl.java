@@ -109,7 +109,6 @@ public class ClientServiceImpl implements ClientService {
         }
     }
 
-    @Override
     public ClientResponseDTO convertToClientResponseDto(Client client) {
         return ClientResponseDTO.builder()
                 .id(client.getId())
@@ -121,7 +120,6 @@ public class ClientServiceImpl implements ClientService {
                 .build();
     }
 
-    @Override
     public Client convertFromClientPayloadDto(ClientPayloadDTO clientPayloadDTO) {
         return Client.builder()
                 .firstName(clientPayloadDTO.getFirstName())

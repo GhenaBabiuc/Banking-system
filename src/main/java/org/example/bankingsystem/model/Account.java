@@ -50,4 +50,19 @@ public class Account {
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private AccountStatus status;
 
+    public void deposit(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) > 0) {
+            this.balance = this.balance.add(amount);
+        } else {
+            throw new IllegalArgumentException("Amount to deposit should be greater than zero");
+        }
+    }
+
+    public void withdraw(BigDecimal amount) {
+        if (amount.compareTo(BigDecimal.ZERO) > 0 && this.balance.compareTo(amount) >= 0) {
+            this.balance = this.balance.subtract(amount);
+        } else {
+            throw new IllegalArgumentException("Insufficient balance or invalid amount");
+        }
+    }
 }

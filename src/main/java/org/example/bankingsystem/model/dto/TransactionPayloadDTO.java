@@ -21,7 +21,7 @@ public class TransactionPayloadDTO {
     @Schema(description = "ID of the destination account for the transaction", example = "2", required = true)
     private Long destinationAccountId;
 
-    @Schema(description = "Type of the transaction", example = "TRANSFER", required = true)
+    @Schema(description = "Type of the transaction", example = "DEPOSIT", required = true)
     private TransactionType transactionType;
 
     @Schema(description = "Transaction amount", example = "100.00", required = true)
@@ -32,5 +32,4 @@ public class TransactionPayloadDTO {
 
     @Schema(description = "Description of the transaction", example = "Payment for services", nullable = true)
     private String description;
-
 }

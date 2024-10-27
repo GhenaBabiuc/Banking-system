@@ -20,8 +20,7 @@ public class ClientController {
     @Resource
     private ClientService clientService;
 
-    @Operation(summary = "Create client",
-            description = "Creating a new client.")
+    @Operation(summary = "Create client", description = "Creating a new client")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Client created"),
             @ApiResponse(responseCode = "404", description = "Client not created", content = @Content)
@@ -32,8 +31,7 @@ public class ClientController {
         return ResponseEntity.ok(responseDTO);
     }
 
-    @Operation(summary = "Get clients",
-            description = "Fetches the clients details, requires user to be authenticated.")
+    @Operation(summary = "Get clients", description = "Fetches the clients details")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Clients found"),
             @ApiResponse(responseCode = "404", description = "Clients not found", content = @Content)
@@ -44,8 +42,7 @@ public class ClientController {
         return ResponseEntity.ok(clients);
     }
 
-    @Operation(summary = "Get client by ID",
-            description = "Fetches the client details by client ID, requires user to be authenticated.")
+    @Operation(summary = "Get client by ID", description = "Fetches the client details by client ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Client found"),
             @ApiResponse(responseCode = "404", description = "Client not found", content = @Content)
@@ -56,7 +53,7 @@ public class ClientController {
         return ResponseEntity.ok(clientResponse);
     }
 
-    @Operation(summary = "Update client", description = "Updates a client's details.")
+    @Operation(summary = "Update client", description = "Updates a client's details")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Client updated"),
             @ApiResponse(responseCode = "404", description = "Client not found", content = @Content)
@@ -67,7 +64,7 @@ public class ClientController {
         return ResponseEntity.ok(updatedClient);
     }
 
-    @Operation(summary = "Delete client", description = "Deletes a client by ID.")
+    @Operation(summary = "Delete client", description = "Deletes a client by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Client deleted"),
             @ApiResponse(responseCode = "404", description = "Client not found", content = @Content)

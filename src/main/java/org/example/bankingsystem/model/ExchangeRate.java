@@ -22,15 +22,14 @@ public class ExchangeRate {
     private Integer id;
 
     @Column(name = "base_currency", nullable = false, length = 3)
-    private String baseCurrency;
+    private Currency baseCurrency;
 
     @Column(name = "target_currency", nullable = false, length = 3)
-    private String targetCurrency;
+    private Currency targetCurrency;
 
     @Column(name = "rate", nullable = false, precision = 15, scale = 6)
     private BigDecimal rate;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
-
 }

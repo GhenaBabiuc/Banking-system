@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,10 +23,14 @@ public class ExchangeRate {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "base_currency", nullable = false, length = 3)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private Currency baseCurrency;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "target_currency", nullable = false, length = 3)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private Currency targetCurrency;
 
     @Column(name = "rate", nullable = false, precision = 15, scale = 6)

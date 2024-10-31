@@ -79,6 +79,7 @@ public class TransactionServiceImpl implements TransactionService {
                 }
 
                 sourceAccount.withdraw(amount);
+                amount = transactionPayloadDTO.getAmount();
 
                 if (transactionCurrency != destinationAccount.getCurrency()) {
                     BigDecimal exchangeRate = exchangeRateService.getExchangeRate(transactionCurrency, destinationAccount.getCurrency());

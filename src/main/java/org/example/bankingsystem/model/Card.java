@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 
@@ -39,5 +38,4 @@ public class Card {
 
     @Column(name = "issue_date")
     private LocalDate issueDate;
-
 }

@@ -107,7 +107,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionResponseDTO> getAllTransactions() {
-        List<Transaction> transactions = transactionRepository.findAll();
+        List<Transaction> transactions = findAll();
 
         return transactions.stream()
                 .map(this::convertToTransactionResponseDTO)

@@ -21,5 +21,4 @@ public class AccountType {
 
     @Column(name = "description")
     private String description;
-
 }

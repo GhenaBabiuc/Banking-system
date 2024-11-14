@@ -2,19 +2,18 @@ package org.example.bankingsystem.model.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Schema(description = "DTO representing client details")
 public class ClientPayloadDTO {
+
     @NotBlank(message = "First Name is required")
     @Schema(description = "First Name of the client", example = "Elon")
     private String firstName;

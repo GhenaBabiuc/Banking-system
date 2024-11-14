@@ -36,5 +36,4 @@ public class Loan {
 
     @Column(name = "term_months", nullable = false)
     private Integer termMonths;
-
 }

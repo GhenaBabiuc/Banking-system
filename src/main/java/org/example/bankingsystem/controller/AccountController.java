@@ -74,5 +74,4 @@ public class AccountController {
         accountService.deleteAccountById(id);
         return ResponseEntity.ok().build();
     }
-
 }

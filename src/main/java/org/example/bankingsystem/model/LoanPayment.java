@@ -30,5 +30,4 @@ public class LoanPayment {
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
-
 }

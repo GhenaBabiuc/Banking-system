@@ -3,17 +3,20 @@ package org.example.bankingsystem.model.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "DTO representing account details")
 public class AccountPayloadDTO {
+
     @NotBlank(message = "Account number is required")
     @Schema(description = "Account number", example = "12345678901234567890")
     private String number;

@@ -32,5 +32,4 @@ public class AccountLimit {
 
     @Column(name = "monthly_transfer_limit", nullable = false, precision = 15, scale = 2)
     private BigDecimal monthlyTransferLimit;
-
 }
